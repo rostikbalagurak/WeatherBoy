@@ -1,76 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:background="@android:color/transparent"
     android:padding="30dp"
     android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/dateLayout"
-        android:background="@android:color/transparent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:orientation="vertical">
+
         <TextView
-            android:id="@+id/weekDayTextView"
-            android:background="@android:color/transparent"
+            android:id="@+id/tv_week_day"
             android:layout_width="match_parent"
             android:textColor="#fff"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:textSize="40sp"
-            android:text="Sunday"/>
+            android:text="Sunday" />
+
         <TextView
-            android:id="@+id/dateTextView"
+            android:id="@+id/tv_date"
             android:textColor="#fff"
-            android:background="@android:color/transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:textSize="36sp"
-            android:text="24 April"/>
-        </LinearLayout>
+            android:text="24 April" />
+    </LinearLayout>
+
     <ImageView
         android:layout_width="100dp"
-        android:id="@+id/wekDayIcon"
-        android:layout_height="wrap_content"
+        android:id="@+id/iv_week_day_icon"
+        android:layout_height="100dp"
         android:adjustViewBounds="true"
-        android:background="@android:color/transparent"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/dayTemperatureLayout"
         android:layout_toStartOf="@+id/dayTemperatureLayout"
-        android:layout_marginRight="35dp"
-        android:layout_marginEnd="35dp"
-        android:src="@drawable/cloudy_icon"
-        />
+        android:layout_toRightOf="@+id/dateLayout"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:src="@drawable/cloudy_icon" />
+
     <LinearLayout
         android:layout_width="wrap_content"
-        android:background="@android:color/transparent"
         android:id="@+id/dayTemperatureLayout"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:orientation="vertical">
+
         <TextView
-            android:id="@+id/dayTemperatureTextView"
+            android:id="@+id/tv_day_temperature"
             android:textColor="#fff"
-            android:background="@android:color/transparent"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="40sp"
-            android:text="10 C"/>
+            android:text="10 C" />
+
         <TextView
-            android:id="@+id/nightTemperatureTextView"
-            android:background="@android:color/transparent"
+            android:id="@+id/tv_night_temperature"
             android:layout_width="match_parent"
             android:textColor="#fff"
             android:gravity="center_horizontal"
             android:layout_height="wrap_content"
             android:textSize="36sp"
-            android:text="2 C"/>
+            android:text="2 C" />
     </LinearLayout>
 
 </RelativeLayout>

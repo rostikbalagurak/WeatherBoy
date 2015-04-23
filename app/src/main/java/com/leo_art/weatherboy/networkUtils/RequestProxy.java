@@ -5,12 +5,9 @@ import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.leo_art.weatherboy.MainActivity;
 
-import org.apache.http.client.CookieStore;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
@@ -31,11 +28,12 @@ public class RequestProxy {
 
         // Create an instance of the Http client.
         // We need this in order to access the cookie store
-        this.context = context;
-        mHttpClient = getThreadSafeClient();
-        CookieStore cookieStore = mHttpClient.getCookieStore();
-        mHttpClient.setCookieStore(cookieStore);
-        mRequestQueue = Volley.newRequestQueue(context.getApplicationContext(), new HttpClientStack(mHttpClient));
+      //  this.context = context;
+       // mHttpClient = getThreadSafeClient();
+       // CookieStore cookieStore = mHttpClient.getCookieStore();
+       // mHttpClient.setCookieStore(cookieStore);
+       // mRequestQueue = Volley.newRequestQueue(context.getApplicationContext(), new HttpClientStack(mHttpClient));
+        mRequestQueue = Volley.newRequestQueue(context.getApplicationContext());
     }
 
     private DefaultHttpClient getThreadSafeClient() {
@@ -67,4 +65,6 @@ public class RequestProxy {
 
         mRequestQueue.add(jsonObjectRequest);
     }
+
+
 }
