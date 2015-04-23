@@ -44,7 +44,7 @@
         android:layout_toRightOf="@+id/dateLayout"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
-        android:src="@drawable/cloudy_icon" />
+        android:src="@mipmap/cloudy_icon" />
 
     <LinearLayout
         android:layout_width="wrap_content"
