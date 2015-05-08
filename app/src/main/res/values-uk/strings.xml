@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WeatherBoy</string>
+    <string name="weather_fragment_title" translatable="false">Що мені одіти?</string>
+    <string name="title_activity_settings">Налаштування</string>
+    <string name="next_week">Наступного тижня</string>
+    <string name="search_hint">Знайдіть ваше місце</string>
+    <string name="no_internet">Немає інтернету</string>
+    <string name="generic_error">Помилка на сервері</string>
+    <string name="generic_server_down">Помилка на сервері</string>
+    <string name="action_settings">Налаштування</string>
+    <string name="metric">Метрика</string>
+</resources>
