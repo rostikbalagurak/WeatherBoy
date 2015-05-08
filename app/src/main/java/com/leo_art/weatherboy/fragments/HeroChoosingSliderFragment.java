@@ -7,23 +7,22 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.leo_art.weatherboy.R;
+import com.leo_art.weatherboy.model.Hero;
 
 
 public class HeroChoosingSliderFragment extends Fragment {
 
-    private static final String ARG_INDEX = "index";
+    private static final String ARG_HERO = "hero";
 
+    private Hero hero;
 
-    // TODO: Rename and change types of parameters
-    private String index;
-
-
-    public static HeroChoosingSliderFragment newInstance(String index) {
+    public static HeroChoosingSliderFragment newInstance(Hero hero) {
         HeroChoosingSliderFragment fragment = new HeroChoosingSliderFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_INDEX, index);
+        args.putSerializable(ARG_HERO, hero);
         fragment.setArguments(args);
         return fragment;
     }
@@ -36,7 +35,7 @@ public class HeroChoosingSliderFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            index = getArguments().getString(ARG_INDEX);
+            hero = (Hero)getArguments().getSerializable(ARG_HERO);
         }
     }
 
@@ -44,10 +43,11 @@ public class HeroChoosingSliderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_hero_choosing_slider, container, false);
+        View v = inflater.inflate(R.layout.fragment_hero_choosing_slider, container, false);
+        TextView heroName = (TextView)v.findViewById(R.id.tv_hero_name);
+        heroName.setText(hero.getName());
+        return v;
     }
-
-
 
     @Override
     public void onAttach(Activity activity) {

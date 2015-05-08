@@ -12,6 +12,7 @@ import com.leo_art.weatherboy.WeatherApplication;
 import com.leo_art.weatherboy.adapters.SliderPagerAdapter;
 import com.leo_art.weatherboy.dialogs.MetricChooserDialogFragment;
 import com.leo_art.weatherboy.fragments.HeroChoosingSliderFragment;
+import com.leo_art.weatherboy.model.Hero;
 import com.leo_art.weatherboy.model.Settings;
 import com.leo_art.weatherboy.utils.ZoomOutPageTransformer;
 
@@ -55,12 +56,15 @@ public class SettingsActivity extends AppCompatActivity implements MetricChooser
     }
 
     private void initPagerAdapter(){
-        heroesFragments = new ArrayList<>();
-        heroesFragments.add(new HeroChoosingSliderFragment());
-        heroesFragments.add(new HeroChoosingSliderFragment());
-        heroesFragments.add(new HeroChoosingSliderFragment());
-        heroesFragments.add(new HeroChoosingSliderFragment());
+        ArrayList<Hero> heroes = new ArrayList<>();
+        heroes.add(new Hero("Fry", ""));
+        heroes.add(new Hero("Leela", ""));
+        heroes.add(new Hero("Bender", ""));
 
+        heroesFragments = new ArrayList<>();
+        for(Hero hero : heroes ){
+            heroesFragments.add(HeroChoosingSliderFragment.newInstance(hero));
+        }
         vpHero.setAdapter(new SliderPagerAdapter(getSupportFragmentManager(), heroesFragments));
     }
 

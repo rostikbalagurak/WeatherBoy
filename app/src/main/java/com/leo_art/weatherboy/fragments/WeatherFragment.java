@@ -71,12 +71,12 @@ public class WeatherFragment extends Fragment {
 
         String city = "";
         //TODO refactor
-        if(((BaseActivity)getActivity()).getSettings()!=null){
-            city = ((BaseActivity)getActivity()).getSettings().getCity();
-        }else{
-            //TODO Refactor
-            city = LocationEngine.getInstance(getActivity()).getCityName();
-        }
+//        if(((BaseActivity)getActivity()).getSettings()!=null){
+//            city = ((BaseActivity)getActivity()).getSettings().getCity();
+//        }else{
+//            //TODO Refactor
+//            city = LocationEngine.getInstance(getActivity()).getCityName();
+//        }
 
         if (!TextUtils.isEmpty(city)) {
             loadWeatherJSON(city);
