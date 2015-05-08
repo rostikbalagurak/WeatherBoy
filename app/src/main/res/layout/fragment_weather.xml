@@ -43,6 +43,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/ll_input"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
@@ -129,10 +130,11 @@
         </LinearLayout>
     </LinearLayout>
 
-    <include layout="@layout/bottom_day_forecast"
+    <include
+        layout="@layout/bottom_day_forecast"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"/>
+        android:layout_weight="0.5" />
 
 
 </LinearLayout>

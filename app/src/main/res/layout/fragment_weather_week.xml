@@ -4,7 +4,15 @@
     android:layout_height="match_parent"
     tools:context="com.leo_art.weatherboy.fragments.WeatherWeekFragment">
 
-    <ListView
+    <ImageView
+        android:id="@+id/iv_drawable"
+        android:layout_width="match_parent"
+        android:layout_height="256dip"
+        android:layout_gravity="center"
+        android:padding="12dip"
+        />
+
+    <com.twotoasters.jazzylistview.JazzyListView
         android:id="@+id/weekWeatherListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -1,6 +1,6 @@
 package com.leo_art.weatherboy.networkUtils;
 
-        import android.content.Context;
+import android.content.Context;
 
 public class RequestManager {
     private static RequestManager instance;

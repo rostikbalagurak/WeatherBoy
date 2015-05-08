@@ -13,8 +13,21 @@
     <string name="generic_server_down">generic_server_down</string>
     <string name="no_internet">Sorry...No internet.</string>
 
+    <string name="title_activity_settings">Settings</string>
+    <string name="metric">Metric</string>
+    <string name="celsium">Celsium</string>
+    <string name="your_city">Your city</string>
+    <string name="auto_background_change">Auto background change</string>
+    <string name="change_background_due_to_weather">Change background due to weather</string>
+
+    <string name="pick_metric">Pick metric</string>
+    
+    <string-array name="metrics_array">
+        <item>Celsium</item>
+        <item>Kelvin</item>
+    </string-array>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_settings">Settings</string>
+
 </resources>

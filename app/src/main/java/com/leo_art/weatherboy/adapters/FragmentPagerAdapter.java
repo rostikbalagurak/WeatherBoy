@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
     private ArrayList<Fragment> data;
 
-    public FragmentPagerAdapter(ArrayList<Fragment> data, FragmentManager fm){
+    public FragmentPagerAdapter(ArrayList<Fragment> data, FragmentManager fm) {
         super(fm);
         this.data = data;
     }

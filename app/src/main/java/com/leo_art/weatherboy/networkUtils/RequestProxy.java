@@ -28,11 +28,11 @@ public class RequestProxy {
 
         // Create an instance of the Http client.
         // We need this in order to access the cookie store
-      //  this.context = context;
-       // mHttpClient = getThreadSafeClient();
-       // CookieStore cookieStore = mHttpClient.getCookieStore();
-       // mHttpClient.setCookieStore(cookieStore);
-       // mRequestQueue = Volley.newRequestQueue(context.getApplicationContext(), new HttpClientStack(mHttpClient));
+        //  this.context = context;
+        // mHttpClient = getThreadSafeClient();
+        // CookieStore cookieStore = mHttpClient.getCookieStore();
+        // mHttpClient.setCookieStore(cookieStore);
+        // mRequestQueue = Volley.newRequestQueue(context.getApplicationContext(), new HttpClientStack(mHttpClient));
         mRequestQueue = Volley.newRequestQueue(context.getApplicationContext());
     }
 
