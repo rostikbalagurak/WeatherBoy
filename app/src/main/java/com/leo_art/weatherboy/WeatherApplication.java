@@ -9,7 +9,6 @@ import com.leo_art.weatherboy.model.Settings;
 import com.leo_art.weatherboy.networkUtils.RequestManager;
 
 public class WeatherApplication extends Application {
-
     public static final String TAG = "WeatherApplication";
 
     private SharedPreferences sharedPreferences;
