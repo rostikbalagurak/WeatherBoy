@@ -7,12 +7,11 @@
     tools:context="com.leo_art.weatherboy.fragments.HeroChoosingSliderFragment">
 
     <ImageView
-        android:id="@+id/iv_hero"
+        android:id="@+id/iv_hero_image"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
-        android:padding="10dp"
-        android:src="@mipmap/boy" />
+        android:padding="10dp" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -39,6 +38,21 @@
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:text="Free" />
+        <TextView
+            android:id="@+id/tv_is_current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:text="Current" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select"
+            android:id="@+id/select_hero_button"
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 

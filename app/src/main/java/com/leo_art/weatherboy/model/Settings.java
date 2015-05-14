@@ -1,9 +1,18 @@
 package com.leo_art.weatherboy.model;
 
-/**
- * Created by bogdan on 4/24/15.
- */
-public class Settings {
+import com.leo_art.weatherboy.WeatherApplication;
+
+import io.realm.Realm;
+import io.realm.RealmObject;
+
+public class Settings extends RealmObject{
+    private double longtitude;
+    private double latitude;
+    private String city;
+
+    private String country;
+    private String metric;
+    private int currentHeroId;
 
     public double getLongtitude() {
         return longtitude;
@@ -45,11 +54,13 @@ public class Settings {
         this.metric = metric;
     }
 
-    private double longtitude;
-    private double latitude;
-    private String city;
-    private String country;
-    private String metric;
+    public int getCurrentHeroId() {
+        return currentHeroId;
+    }
+
+    public void setCurrentHeroId(int currentHeroId) {
+        this.currentHeroId = currentHeroId;
+    }
 
    // public enum Degree = {CELSIUS, KELVIN}
 }

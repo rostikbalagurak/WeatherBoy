@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.leo_art.weatherboy.R;
-import com.leo_art.weatherboy.WeatherApplication;
 import com.leo_art.weatherboy.adapters.SliderPagerAdapter;
 import com.leo_art.weatherboy.dialogs.MetricChooserDialogFragment;
 import com.leo_art.weatherboy.fragments.HeroChoosingSliderFragment;
@@ -18,7 +17,10 @@ import com.leo_art.weatherboy.utils.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
-//TODO get all settings and check for any chenges after editing. If there are any - show dialog for asking if changes shoud be changed
+
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 public class SettingsActivity extends AppCompatActivity implements MetricChooserDialogFragment.OnMetricDialogChooseListener{
 
     protected ViewPager vpHero;
@@ -36,10 +38,15 @@ public class SettingsActivity extends AppCompatActivity implements MetricChooser
         setContentView(R.layout.activity_settings);
         metricsStrings = getResources().getStringArray(R.array.metrics_array);
 
-        settings = WeatherApplication.getInstance().getSettings();
+        loadSettings();
         initUI();
 
-        initData(settings);
+        initData();
+    }
+
+    private void loadSettings() {
+        Realm realm = Realm.getInstance(this);
+        this.settings = realm.allObjects(Settings.class).first();
     }
 
     private void initUI(){
@@ -56,19 +63,29 @@ public class SettingsActivity extends AppCompatActivity implements MetricChooser
     }
 
     private void initPagerAdapter(){
-        ArrayList<Hero> heroes = new ArrayList<>();
-        heroes.add(new Hero("Fry", ""));
-        heroes.add(new Hero("Leela", ""));
-        heroes.add(new Hero("Bender", ""));
+        Realm realm = Realm.getInstance(this);
+        RealmResults<Hero> heroes = realm.allObjects(Hero.class);
 
         heroesFragments = new ArrayList<>();
+        HeroChoosingSliderFragment fragment;
         for(Hero hero : heroes ){
-            heroesFragments.add(HeroChoosingSliderFragment.newInstance(hero));
+            fragment = HeroChoosingSliderFragment.newInstance(hero);
+            fragment.setOnUpdateListener(new HeroChoosingSliderFragment.DataUpdateListener() {
+                @Override
+                public void onUpdate() {
+                    for(HeroChoosingSliderFragment fragment : heroesFragments){
+                        fragment.updateData();
+                    }
+                }
+            });
+            heroesFragments.add(fragment);
         }
         vpHero.setAdapter(new SliderPagerAdapter(getSupportFragmentManager(), heroesFragments));
+
+
     }
 
-    private void initData(Settings settings){
+    private void initData(){
         if(!TextUtils.isEmpty(settings.getMetric())){
             tvMetricValue.setText(settings.getMetric());
         }

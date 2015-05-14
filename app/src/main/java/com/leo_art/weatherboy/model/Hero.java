@@ -2,34 +2,53 @@ package com.leo_art.weatherboy.model;
 
 import java.io.Serializable;
 
-public class Hero implements Serializable{
-    public enum Sex {MALE, FEMALE}
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-    private Sex sex;
+public class Hero extends RealmObject implements Serializable{
+    public static final int MALE = 0;
+    public static final int FEMALE = 1;
+
+    @PrimaryKey
+    private int id;
     private String name;
-    private String imageTypeVeryCold;
-    private String imageTypeCold;
-    private String imageTypeCool;
-    private String imageTypeNormal;
-    private String imageTypeWarm;
-    private String imageTypeHot;
+    private int imageTypeVeryCold;
+    private int imageTypeCold;
+    private int imageTypeCool;
+    private int imageTypeNormal;
+    private int imageTypeWarm;
+    private int imageTypeHot;
+    private int sex;
+
     private boolean isPaid;
     private double price;
 
-    public Hero(String name, String imageSrc){
+    public Hero(String name, int imageResource){
         this.name = name;
-        this.imageTypeCold = imageSrc;
+        this.imageTypeCold = imageResource;
     }
 
-    public Hero(){}
+    public Hero(String name){
+        this.name = name;
+    }
 
-    public Sex getSex() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getSex() {
         return sex;
     }
 
-    public void setSex(Sex sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
+
+    public Hero(){}
 
     public String getName() {
         return name;
@@ -39,51 +58,51 @@ public class Hero implements Serializable{
         this.name = name;
     }
 
-    public String getImageTypeVeryCold() {
+    public int getImageTypeVeryCold() {
         return imageTypeVeryCold;
     }
 
-    public void setImageTypeVeryCold(String imageTypeVeryCold) {
+    public void setImageTypeVeryCold(int imageTypeVeryCold) {
         this.imageTypeVeryCold = imageTypeVeryCold;
     }
 
-    public String getImageTypeCold() {
+    public int getImageTypeCold() {
         return imageTypeCold;
     }
 
-    public void setImageTypeCold(String imageTypeCold) {
+    public void setImageTypeCold(int imageTypeCold) {
         this.imageTypeCold = imageTypeCold;
     }
 
-    public String getImageTypeCool() {
+    public int getImageTypeCool() {
         return imageTypeCool;
     }
 
-    public void setImageTypeCool(String imageTypeCool) {
+    public void setImageTypeCool(int imageTypeCool) {
         this.imageTypeCool = imageTypeCool;
     }
 
-    public String getImageTypeNormal() {
+    public int getImageTypeNormal() {
         return imageTypeNormal;
     }
 
-    public void setImageTypeNormal(String imageTypeNormal) {
+    public void setImageTypeNormal(int imageTypeNormal) {
         this.imageTypeNormal = imageTypeNormal;
     }
 
-    public String getImageTypeWarm() {
+    public int getImageTypeWarm() {
         return imageTypeWarm;
     }
 
-    public void setImageTypeWarm(String imageTypeWarm) {
+    public void setImageTypeWarm(int imageTypeWarm) {
         this.imageTypeWarm = imageTypeWarm;
     }
 
-    public String getImageTypeHot() {
+    public int getImageTypeHot() {
         return imageTypeHot;
     }
 
-    public void setImageTypeHot(String imageTypeHot) {
+    public void setImageTypeHot(int imageTypeHot) {
         this.imageTypeHot = imageTypeHot;
     }
 

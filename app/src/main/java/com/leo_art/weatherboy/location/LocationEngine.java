@@ -166,7 +166,7 @@ public class LocationEngine implements ConnectionCallbacks, OnConnectionFailedLi
                     if (addresses.size() > 0)
                         cityName = addresses.get(0).getLocality();
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

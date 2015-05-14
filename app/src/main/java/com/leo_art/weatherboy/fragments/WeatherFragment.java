@@ -20,10 +20,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.leo_art.weatherboy.Constants;
 import com.leo_art.weatherboy.R;
-import com.leo_art.weatherboy.activity.BaseActivity;
+import com.leo_art.weatherboy.WeatherApplication;
 import com.leo_art.weatherboy.activity.SettingsActivity;
 import com.leo_art.weatherboy.location.LocationEngine;
+import com.leo_art.weatherboy.model.Hero;
 import com.leo_art.weatherboy.model.Main;
+import com.leo_art.weatherboy.model.Settings;
 import com.leo_art.weatherboy.model.Status;
 import com.leo_art.weatherboy.networkUtils.RequestManager;
 import com.leo_art.weatherboy.networkUtils.VolleyErrorHelper;
@@ -35,9 +37,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+
 public class WeatherFragment extends Fragment {
+    private static final String ARG_HERO = "hero";
 
     protected List<Status> statuses;
+    protected Hero hero;
 
     protected LinearLayout llInput;
     protected ImageView ivSettings;
@@ -45,15 +51,25 @@ public class WeatherFragment extends Fragment {
     protected TextView tvLocation;
     protected TextView tvStatus;
     protected TextView tvTemp;
+    protected ImageView ivHero;
 
-    public static WeatherFragment newInstance() {
+    public static WeatherFragment newInstance(Hero hero) {
         WeatherFragment fragment = new WeatherFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_HERO, hero);
+        fragment.setArguments(args);
         return fragment;
     }
 
-    public WeatherFragment() {
-        // Required empty public constructor
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            hero = (Hero)getArguments().getSerializable(ARG_HERO);
+        }
     }
+
+    public WeatherFragment() {}
 
     @Override
     public void onResume() {
@@ -69,14 +85,17 @@ public class WeatherFragment extends Fragment {
 
         initUI(view);
 
-        String city = "";
-        //TODO refactor
-//        if(((BaseActivity)getActivity()).getSettings()!=null){
-//            city = ((BaseActivity)getActivity()).getSettings().getCity();
-//        }else{
-//            //TODO Refactor
-//            city = LocationEngine.getInstance(getActivity()).getCityName();
-//        }
+        Settings settings = WeatherApplication.getInstance().getSettings(getActivity());
+        String city = settings.getCity();
+
+        if(city == null || city.equals("")){
+            city = LocationEngine.getInstance(getActivity()).getCityName();
+
+            Realm realm = Realm.getInstance(getActivity());
+            realm.beginTransaction();
+            settings.setCity(city); // update city
+            realm.commitTransaction();
+        }
 
         if (!TextUtils.isEmpty(city)) {
             loadWeatherJSON(city);
@@ -128,8 +147,7 @@ public class WeatherFragment extends Fragment {
         tvLocation = (TextView) view.findViewById(R.id.tv_location);
         tvStatus = (TextView) view.findViewById(R.id.tv_status);
         tvTemp = (TextView) view.findViewById(R.id.tv_temp);
-
-
+        ivHero = (ImageView) view.findViewById(R.id.iv_hero);
         animateInZoom(ivWeatherIcon);
 
         ivSettings.setOnClickListener(new View.OnClickListener() {
@@ -170,5 +188,28 @@ public class WeatherFragment extends Fragment {
     private void initWeather(Status status, Main main) {
         tvTemp.setText(String.format("%.1f", Converter.kelvinToCel(main.getTemp())));
         tvStatus.setText(status.getName().name().toLowerCase());
+
+        switch (status.getName()){
+            case COLD:
+                ivHero.setImageResource(hero.getImageTypeCold());
+                break;
+            case COOL:
+                ivHero.setImageResource(hero.getImageTypeCool());
+                break;
+            case HOT:
+                ivHero.setImageResource(hero.getImageTypeHot());
+                break;
+            case NORMAL:
+                ivHero.setImageResource(hero.getImageTypeNormal());
+                break;
+            case VERY_COLD:
+                ivHero.setImageResource(hero.getImageTypeVeryCold());
+                break;
+            case WARM:
+                ivHero.setImageResource(hero.getImageTypeWarm());
+                break;
+            default:
+                throw new IllegalStateException("Undefined status");
+        }
     }
 }
