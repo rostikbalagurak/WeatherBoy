@@ -25,6 +25,7 @@
     <string-array name="metrics_array">
         <item>Celsium</item>
         <item>Kelvin</item>
+        <item>Fahrenheit</item>
     </string-array>
 
 <!-- TODO: Remove or change this placeholder text -->

@@ -53,6 +53,11 @@ public class WeatherFragment extends Fragment {
     protected TextView tvTemp;
     protected ImageView ivHero;
 
+    private Settings settings;
+
+    public WeatherFragment() {
+    }
+
     public static WeatherFragment newInstance(Hero hero) {
         WeatherFragment fragment = new WeatherFragment();
         Bundle args = new Bundle();
@@ -69,8 +74,6 @@ public class WeatherFragment extends Fragment {
         }
     }
 
-    public WeatherFragment() {}
-
     @Override
     public void onResume() {
         super.onResume();
@@ -85,10 +88,16 @@ public class WeatherFragment extends Fragment {
 
         initUI(view);
 
-        Settings settings = WeatherApplication.getInstance().getSettings(getActivity());
+        loadData();
+
+        return view;
+    }
+
+    public void loadData() {
+        settings = WeatherApplication.getInstance().getSettings(getActivity());
         String city = settings.getCity();
 
-        if(city == null || city.equals("")){
+        if (city == null || city.equals("")) {
             city = LocationEngine.getInstance(getActivity()).getCityName();
 
             Realm realm = Realm.getInstance(getActivity());
@@ -101,8 +110,6 @@ public class WeatherFragment extends Fragment {
             loadWeatherJSON(city);
             tvLocation.setText(city);
         }
-
-        return view;
     }
 
     private void loadWeatherJSON(String city) {
@@ -154,7 +161,7 @@ public class WeatherFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SettingsActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, Constants.REQUEST_SETTINGS);
             }
         });
     }
@@ -186,7 +193,33 @@ public class WeatherFragment extends Fragment {
     }
 
     private void initWeather(Status status, Main main) {
-        tvTemp.setText(String.format("%.1f", Converter.kelvinToCel(main.getTemp())));
+
+        int number = 0;
+        String[] array = getResources().getStringArray(R.array.metrics_array);
+        for (int i = 0; i < array.length; i++) {
+            if (settings.getMetric().endsWith(array[i])) {
+                number = i;
+            }
+        }
+
+        switch (number) {
+            case 0: {
+                tvTemp.setText(String.format("%.1f", Converter.kelvinToCel(main.getTemp())));
+                break;
+            }
+            case 1: {
+                tvTemp.setText(String.format("%.1f", main.getTemp()));
+                break;
+            }
+            case 2: {
+                tvTemp.setText(String.format("%.1f", Converter.kelvinToFar(main.getTemp())));
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+
         tvStatus.setText(status.getName().name().toLowerCase());
 
         switch (status.getName()){

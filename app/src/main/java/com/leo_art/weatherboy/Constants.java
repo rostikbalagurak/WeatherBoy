@@ -9,4 +9,6 @@ public interface Constants {
     public static final String CITY = "city";
     public static final String COUNTRY = "country";
 
+    public static final int REQUEST_SETTINGS = 1;
+
 }

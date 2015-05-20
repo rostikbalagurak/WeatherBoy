@@ -1,5 +1,6 @@
 package com.leo_art.weatherboy.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -24,6 +25,7 @@ public class MainActivity extends BaseActivity {
     protected Hero hero;
     protected ParallaxViewPager parallaxViewPager;
     protected ProgressBar progressBar;
+    private ArrayList<Fragment> fragmentData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +38,30 @@ public class MainActivity extends BaseActivity {
 
         progressBar = (ProgressBar) findViewById(R.id.preloader);
         parallaxViewPager = (ParallaxViewPager) findViewById(R.id.fragmentPager);
-        ArrayList<Fragment> fragmentData = new ArrayList<>();
+        fragmentData = new ArrayList<>();
         fragmentData.add(WeatherFragment.newInstance(hero));
         fragmentData.add(WeatherFragment.newInstance(hero));
         fragmentData.add(WeatherWeekFragment.newInstance());
         parallaxViewPager.setOverlapPercentage(0.55f).setAdapter(new FragmentPagerAdapter(fragmentData, getSupportFragmentManager()));
 
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        System.err.println("!!!!!!!! " + requestCode + " " + resultCode);
+
+        if (resultCode == RESULT_OK) {
+            settings = WeatherApplication.getInstance().getSettings(getApplicationContext());
+            for (Fragment fragment : fragmentData) {
+                if (fragment instanceof WeatherFragment) {
+                    ((WeatherFragment) fragment).loadData();
+
+                }
+            }
+        }
+
     }
 
     private void loadHero() {

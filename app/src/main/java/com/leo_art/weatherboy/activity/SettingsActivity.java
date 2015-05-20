@@ -1,5 +1,6 @@
 package com.leo_art.weatherboy.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -21,16 +22,22 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class SettingsActivity extends AppCompatActivity implements MetricChooserDialogFragment.OnMetricDialogChooseListener{
+public class SettingsActivity extends AppCompatActivity implements MetricChooserDialogFragment.OnMetricDialogChooseListener {
 
     protected ViewPager vpHero;
     protected List<HeroChoosingSliderFragment> heroesFragments;
-    private String[] metricsStrings;
-
     protected TextView tvMetric;
     protected TextView tvMetricValue;
-
     protected Settings settings;
+    View.OnClickListener metricClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            MetricChooserDialogFragment dialogFragment = new MetricChooserDialogFragment();
+            dialogFragment.show(getSupportFragmentManager(), "");
+        }
+    };
+    private String[] metricsStrings;
+    private boolean isMetricChanged = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity implements MetricChooser
         this.settings = realm.allObjects(Settings.class).first();
     }
 
-    private void initUI(){
+    private void initUI() {
         vpHero = (ViewPager) findViewById(R.id.vp_hero);
         vpHero.setPageTransformer(true, new ZoomOutPageTransformer());
 
@@ -62,18 +69,18 @@ public class SettingsActivity extends AppCompatActivity implements MetricChooser
         tvMetricValue.setOnClickListener(metricClickListener);
     }
 
-    private void initPagerAdapter(){
+    private void initPagerAdapter() {
         Realm realm = Realm.getInstance(this);
         RealmResults<Hero> heroes = realm.allObjects(Hero.class);
 
         heroesFragments = new ArrayList<>();
         HeroChoosingSliderFragment fragment;
-        for(Hero hero : heroes ){
+        for (Hero hero : heroes) {
             fragment = HeroChoosingSliderFragment.newInstance(hero);
             fragment.setOnUpdateListener(new HeroChoosingSliderFragment.DataUpdateListener() {
                 @Override
                 public void onUpdate() {
-                    for(HeroChoosingSliderFragment fragment : heroesFragments){
+                    for (HeroChoosingSliderFragment fragment : heroesFragments) {
                         fragment.updateData();
                     }
                 }
@@ -85,24 +92,41 @@ public class SettingsActivity extends AppCompatActivity implements MetricChooser
 
     }
 
-    private void initData(){
-        if(!TextUtils.isEmpty(settings.getMetric())){
+    private void initData() {
+        if (!TextUtils.isEmpty(settings.getMetric())) {
             tvMetricValue.setText(settings.getMetric());
         }
     }
 
-    View.OnClickListener metricClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            MetricChooserDialogFragment dialogFragment = new MetricChooserDialogFragment();
-            dialogFragment.show(getSupportFragmentManager(),  "");
-        }
-    };
-
     @Override
     public void onMetricDialogItemChosen(int which) {
-        if(which>=0 && which<metricsStrings.length) {
+        if (which >= 0 && which < metricsStrings.length) {
+
+            if (tvMetricValue.getText().toString().equals(metricsStrings[which])) {
+                return;
+            }
+
             tvMetricValue.setText(metricsStrings[which]);
+            String metric = metricsStrings[which];
+            Realm realm = Realm.getInstance(getApplicationContext());
+            realm.beginTransaction();
+            Settings result = realm.where(Settings.class).findFirst();
+            settings.setMetric(metric);
+            result.setMetric(metric);
+            realm.commitTransaction();
+            isMetricChanged = true;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+        if (isMetricChanged) {
+            setResult(RESULT_OK, returnIntent);
+        } else {
+            setResult(RESULT_CANCELED, returnIntent);
+        }
+
+        super.onBackPressed();
     }
 }

@@ -10,4 +10,11 @@
     <string name="generic_server_down">Помилка на сервері</string>
     <string name="action_settings">Налаштування</string>
     <string name="metric">Метрика</string>
+
+    <string-array name="metrics_array">
+        <item>Цельсій</item>
+        <item>Кельвін</item>
+        <item>Фарангейт</item>
+    </string-array>
+
 </resources>

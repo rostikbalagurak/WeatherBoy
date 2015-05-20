@@ -35,6 +35,7 @@ public class MetricChooserDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         // The 'which' argument contains the index position
                         // of the selected item
+                        dialog.dismiss();
                         listener.onMetricDialogItemChosen(which);
                     }
                 });
